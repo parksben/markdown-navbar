@@ -39,7 +39,7 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 |className|string|""|The className that defines the outermost container of navbar|
 |source|string|""|Markdown text content|
 |headingTopOffset|number|0|Anchor relative to the top of the window displacement (for the anchor jump)|
-|ordered|boolean|true|Whether the title containers a numerical prefix, such as: `1. 2. 2.2`|
+|ordered|boolean|true|Whether the title contains a numerical prefix, such as: `1. 2. 2.2`|
 
 ## License
 
