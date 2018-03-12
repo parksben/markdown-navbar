@@ -1,6 +1,10 @@
 # Markdown-Navbar
 
-Best markdown navbar component for React.
+Best markdown navbar component for React. With this component, you can:
+
+* Display article directory for readers
+* Click on the anchor point in the directory to jump to the corresponding article content
+* Share url with anchor hash value to reader
 
 ## Screenshots
 
