@@ -204,6 +204,7 @@ export class MarkdownNavbar extends Component {
           className={cls}
           href={`#heading-${t.index}`}
           onClick={evt => {
+            evt.preventDefault();
             this._scrollToTarget(`heading-${t.index}`);
 
             this.setState({
