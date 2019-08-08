@@ -245,6 +245,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
             className: cls,
             href: '#heading-' + t.index,
             onClick: function onClick(evt) {
+              evt.preventDefault();
               _this5._scrollToTarget('heading-' + t.index);
 
               _this5.setState({
