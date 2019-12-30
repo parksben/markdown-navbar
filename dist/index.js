@@ -69,6 +69,9 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
         return h.distanceToTop === minDistance;
       });
 
+      if (_this.props.updateHashAuto) {
+        window.location.hash = curHeading.dataId;
+      }
       _this.setState({
         currentListNo: curHeading.listNo
       });
@@ -240,12 +243,12 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
         var cls = 'title-anchor title-level' + t.level + ' ' + (_this6.state.currentListNo === t.listNo ? 'active' : '');
 
         return _react2.default.createElement(
-          'a',
+          'div',
           {
             className: cls,
-            href: _this6.props.declarative ? '#' + t.text : '#heading-' + t.index,
             onClick: function onClick(evt) {
               evt.preventDefault();
+              window.location.hash = _this6.props.declarative ? t.text : 'heading-' + t.index;
               _this6._scrollToTarget(_this6.props.declarative ? t.text : 'heading-' + t.index);
               _this6.setState({
                 currentListNo: t.listNo
@@ -275,6 +278,7 @@ MarkdownNavbar.propTypes = {
   source: _propTypes2.default.string,
   ordered: _propTypes2.default.bool,
   headingTopOffset: _propTypes2.default.number,
+  updateHashAuto: _propTypes2.default.bool,
   declarative: _propTypes2.default.bool,
   className: _propTypes2.default.string
 };
@@ -282,6 +286,7 @@ MarkdownNavbar.defaultProps = {
   source: '',
   ordered: true,
   headingTopOffset: 0,
+  updateHashAuto: true,
   declarative: false,
   className: ''
 };
