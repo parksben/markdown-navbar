@@ -45,17 +45,6 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var randomId = function randomId() {
-  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 8;
-
-  var str = 'plokmijnuhbygvtfcrdxeszwaq1234567890';
-  var result = '';
-  while (result.length < size) {
-    result += str.charAt(Math.floor(str.length * Math.random()));
-  }
-  return result;
-};
-
 var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   (0, _inherits3.default)(MarkdownNavbar, _Component);
 
@@ -92,9 +81,13 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   }
 
   (0, _createClass3.default)(MarkdownNavbar, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
       var _this2 = this;
+
+      if (this.addTargetTimeout) {
+        clearTimeout(this.addTargetTimeout);
+      }
 
       this.addTargetTimeout = setTimeout(function () {
         _this2._initheadingsId();
@@ -104,9 +97,12 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      clearTimeout(this.addTargetTimeout);
-      clearTimeout(this.scrollTimeout);
-
+      if (this.addTargetTimeout) {
+        clearTimeout(this.addTargetTimeout);
+      }
+      if (this.scrollTimeout) {
+        clearTimeout(this.scrollTimeout);
+      }
       document.removeEventListener('scroll', this._winScroll, false);
     }
   }, {
@@ -197,12 +193,14 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
         var curheading = Array.prototype.slice.apply(headings).find(function (h) {
           return h.innerText.replace(/^(\d+\.)+\s?/g, '').replace(/^\d+\.?\s?/g, '') === t.text;
         });
+
         if (curheading) {
-          curheading.dataset.id = 'heading-' + t.index;
+          curheading.dataset.id = _this4.props.declarative ? t.text : 'heading-' + t.index;
         }
 
-        var headingId = window.location.hash.match(/heading-\d+/g);
-        if (headingId && headingId[0] === 'heading-' + t.index) {
+        var headingId = _this4.props.declarative ? window.location.hash.replace(/^#/, '').trim() : (window.location.hash.match(/heading-\d+/g) || [])[0];
+
+        if (headingId && headingId === curheading.dataset.id) {
           _this4._scrollToTarget(headingId);
           _this4.setState({
             currentListNo: t.listNo
@@ -213,6 +211,8 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   }, {
     key: '_getHeadingList',
     value: function _getHeadingList() {
+      var _this5 = this;
+
       var headingList = [];
 
       this._getNavStructure().forEach(function (t) {
@@ -222,7 +222,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
         });
         if (curheading) {
           headingList.push({
-            dataId: 'heading-' + t.index,
+            dataId: _this5.props.declarative ? t.text : 'heading-' + t.index,
             listNo: t.listNo,
             offsetTop: curheading.offsetTop
           });
@@ -234,25 +234,25 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var tBlocks = this._getNavStructure().map(function (t) {
-        var cls = 'title-anchor title-level' + t.level + ' ' + (_this5.state.currentListNo === t.listNo ? 'active' : '');
+        var cls = 'title-anchor title-level' + t.level + ' ' + (_this6.state.currentListNo === t.listNo ? 'active' : '');
 
         return _react2.default.createElement(
           'a',
           {
             className: cls,
-            href: '#heading-' + t.index,
+            href: _this6.props.declarative ? '#' + t.text : '#heading-' + t.index,
             onClick: function onClick(evt) {
-              _this5._scrollToTarget('heading-' + t.index);
-
-              _this5.setState({
+              evt.preventDefault();
+              _this6._scrollToTarget(_this6.props.declarative ? t.text : 'heading-' + t.index);
+              _this6.setState({
                 currentListNo: t.listNo
               });
             },
-            key: 'title_anchor_' + randomId() },
-          _this5.props.ordered ? _react2.default.createElement(
+            key: 'title_anchor_' + Math.random().toString(36).substring(2) },
+          _this6.props.ordered ? _react2.default.createElement(
             'small',
             null,
             t.listNo
@@ -275,12 +275,14 @@ MarkdownNavbar.propTypes = {
   source: _propTypes2.default.string,
   ordered: _propTypes2.default.bool,
   headingTopOffset: _propTypes2.default.number,
+  declarative: _propTypes2.default.bool,
   className: _propTypes2.default.string
 };
 MarkdownNavbar.defaultProps = {
   source: '',
   ordered: true,
   headingTopOffset: 0,
+  declarative: false,
   className: ''
 };
 exports.default = MarkdownNavbar;

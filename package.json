@@ -24,14 +24,18 @@
     "rimraf": "^2.6.2"
   },
   "name": "markdown-navbar",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Best markdown navigation bar for React.",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/parksben/markdown-navbar.git"
   },
-  "keywords": ["react", "markdown", "navbar"],
+  "keywords": [
+    "react",
+    "markdown",
+    "navbar"
+  ],
   "author": "parksben",
   "license": "MIT"
 }
