@@ -2,20 +2,12 @@ import 'core-js/shim';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const randomId = (size = 8) => {
-  const str = 'plokmijnuhbygvtfcrdxeszwaq1234567890';
-  let result = '';
-  while (result.length < size) {
-    result += str.charAt(Math.floor(str.length * Math.random()));
-  }
-  return result;
-};
-
 export class MarkdownNavbar extends Component {
   static propTypes = {
     source: PropTypes.string,
     ordered: PropTypes.bool,
     headingTopOffset: PropTypes.number,
+    declarative: PropTypes.bool,
     className: PropTypes.string,
   };
 
@@ -23,6 +15,7 @@ export class MarkdownNavbar extends Component {
     source: '',
     ordered: true,
     headingTopOffset: 0,
+    declarative: false,
     className: '',
   };
 
@@ -33,7 +26,11 @@ export class MarkdownNavbar extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillReceiveProps() {
+    if (this.addTargetTimeout) {
+      clearTimeout(this.addTargetTimeout);
+    }
+
     this.addTargetTimeout = setTimeout(() => {
       this._initheadingsId();
       document.addEventListener('scroll', this._winScroll, false);
@@ -41,9 +38,12 @@ export class MarkdownNavbar extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.addTargetTimeout);
-    clearTimeout(this.scrollTimeout);
-
+    if (this.addTargetTimeout) {
+      clearTimeout(this.addTargetTimeout);
+    }
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
     document.removeEventListener('scroll', this._winScroll, false);
   }
 
@@ -129,12 +129,18 @@ export class MarkdownNavbar extends Component {
               .replace(/^(\d+\.)+\s?/g, '')
               .replace(/^\d+\.?\s?/g, '') === t.text
         );
+
       if (curheading) {
-        curheading.dataset.id = `heading-${t.index}`;
+        curheading.dataset.id = this.props.declarative
+          ? t.text
+          : `heading-${t.index}`;
       }
 
-      const headingId = window.location.hash.match(/heading-\d+/g);
-      if (headingId && headingId[0] === `heading-${t.index}`) {
+      const headingId = this.props.declarative
+        ? window.location.hash.replace(/^#/, '').trim()
+        : (window.location.hash.match(/heading-\d+/g) || [])[0];
+
+      if (headingId && headingId === curheading.dataset.id) {
         this._scrollToTarget(headingId);
         this.setState({
           currentListNo: t.listNo,
@@ -158,7 +164,7 @@ export class MarkdownNavbar extends Component {
         );
       if (curheading) {
         headingList.push({
-          dataId: `heading-${t.index}`,
+          dataId: this.props.declarative ? t.text : `heading-${t.index}`,
           listNo: t.listNo,
           offsetTop: curheading.offsetTop,
         });
@@ -194,28 +200,27 @@ export class MarkdownNavbar extends Component {
 
   render() {
     const tBlocks = this._getNavStructure().map(t => {
-      const cls = `title-anchor title-level${t.level} ${this.state
-        .currentListNo === t.listNo
-        ? 'active'
-        : ''}`;
+      const cls = `title-anchor title-level${t.level} ${
+        this.state.currentListNo === t.listNo ? 'active' : ''
+      }`;
 
       return (
         <a
           className={cls}
-          href={`#heading-${t.index}`}
+          href={this.props.declarative ? `#${t.text}` : `#heading-${t.index}`}
           onClick={evt => {
-            this._scrollToTarget(`heading-${t.index}`);
-
+            evt.preventDefault();
+            this._scrollToTarget(
+              this.props.declarative ? t.text : `heading-${t.index}`
+            );
             this.setState({
               currentListNo: t.listNo,
             });
           }}
-          key={`title_anchor_${randomId()}`}>
-          {this.props.ordered
-            ? <small>
-                {t.listNo}
-              </small>
-            : null}
+          key={`title_anchor_${Math.random()
+            .toString(36)
+            .substring(2)}`}>
+          {this.props.ordered ? <small>{t.listNo}</small> : null}
           {t.text}
         </a>
       );
