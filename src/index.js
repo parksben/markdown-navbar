@@ -7,6 +7,7 @@ export class MarkdownNavbar extends Component {
     source: PropTypes.string,
     ordered: PropTypes.bool,
     headingTopOffset: PropTypes.number,
+    updateHashAuto: PropTypes.bool,
     declarative: PropTypes.bool,
     className: PropTypes.string,
   };
@@ -15,6 +16,7 @@ export class MarkdownNavbar extends Component {
     source: '',
     ordered: true,
     headingTopOffset: 0,
+    updateHashAuto: true,
     declarative: false,
     className: '',
   };
@@ -193,6 +195,9 @@ export class MarkdownNavbar extends Component {
       h => h.distanceToTop === minDistance
     );
 
+    if (this.props.updateHashAuto) {
+      window.location.hash = curHeading.dataId;
+    }
     this.setState({
       currentListNo: curHeading.listNo,
     });
@@ -205,11 +210,13 @@ export class MarkdownNavbar extends Component {
       }`;
 
       return (
-        <a
+        <div
           className={cls}
-          href={this.props.declarative ? `#${t.text}` : `#heading-${t.index}`}
           onClick={evt => {
             evt.preventDefault();
+            window.location.hash = this.props.declarative
+              ? t.text
+              : `heading-${t.index}`;
             this._scrollToTarget(
               this.props.declarative ? t.text : `heading-${t.index}`
             );
@@ -222,7 +229,7 @@ export class MarkdownNavbar extends Component {
             .substring(2)}`}>
           {this.props.ordered ? <small>{t.listNo}</small> : null}
           {t.text}
-        </a>
+        </div>
       );
     });
 

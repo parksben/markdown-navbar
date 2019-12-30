@@ -13,6 +13,7 @@
   font-weight: lighter;
   line-height: 2em;
   padding-right: 1.8em;
+  cursor: pointer;
 }
 
 .markdown-navigation .title-anchor:hover,
