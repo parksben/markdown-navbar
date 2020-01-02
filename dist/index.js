@@ -70,7 +70,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
       });
 
       if (_this.props.updateHashAuto) {
-        window.location.hash = curHeading.dataId;
+        _this._updateHash(curHeading.dataId);
       }
       _this.setState({
         currentListNo: curHeading.listNo
@@ -91,7 +91,6 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
       if (this.addTargetTimeout) {
         clearTimeout(this.addTargetTimeout);
       }
-
       this.addTargetTimeout = setTimeout(function () {
         _this2._initheadingsId();
         document.addEventListener('scroll', _this2._winScroll, false);
@@ -180,7 +179,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
         clearTimeout(this.scrollTimeout);
       }
 
-      // ToDo: create one new `scrollTo` method for different browsers.
+      // TODO: create one new `scrollTo` method for different browsers.
       this.scrollTimeout = setTimeout(function () {
         var target = document.querySelector('[data-id="' + dataId + '"]');
         window.scrollTo(0, target.offsetTop - _this3.props.headingTopOffset);
@@ -235,6 +234,11 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
       return headingList;
     }
   }, {
+    key: '_updateHash',
+    value: function _updateHash(value) {
+      history.replaceState({}, '', location.pathname + '#' + value);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this6 = this;
@@ -248,7 +252,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
             className: cls,
             onClick: function onClick(evt) {
               evt.preventDefault();
-              window.location.hash = _this6.props.declarative ? t.text : 'heading-' + t.index;
+              _this6._updateHash(_this6.props.declarative ? t.text : 'heading-' + t.index);
               _this6._scrollToTarget(_this6.props.declarative ? t.text : 'heading-' + t.index);
               _this6.setState({
                 currentListNo: t.listNo
