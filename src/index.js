@@ -203,7 +203,11 @@ export class MarkdownNavbar extends Component {
   };
 
   _updateHash(value) {
-    history.replaceState({}, '', `${location.pathname}#${value}`);
+    history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}${window.location.search}#${value}`
+    );
   }
 
   render() {
