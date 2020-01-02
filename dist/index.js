@@ -236,7 +236,7 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
   }, {
     key: '_updateHash',
     value: function _updateHash(value) {
-      history.replaceState({}, '', location.pathname + '#' + value);
+      history.replaceState({}, '', '' + window.location.pathname + window.location.search + '#' + value);
     }
   }, {
     key: 'render',
