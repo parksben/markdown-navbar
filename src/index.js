@@ -32,7 +32,6 @@ export class MarkdownNavbar extends Component {
     if (this.addTargetTimeout) {
       clearTimeout(this.addTargetTimeout);
     }
-
     this.addTargetTimeout = setTimeout(() => {
       this._initheadingsId();
       document.addEventListener('scroll', this._winScroll, false);
@@ -113,7 +112,7 @@ export class MarkdownNavbar extends Component {
       clearTimeout(this.scrollTimeout);
     }
 
-    // ToDo: create one new `scrollTo` method for different browsers.
+    // TODO: create one new `scrollTo` method for different browsers.
     this.scrollTimeout = setTimeout(() => {
       const target = document.querySelector(`[data-id="${dataId}"]`);
       window.scrollTo(0, target.offsetTop - this.props.headingTopOffset);
@@ -196,12 +195,16 @@ export class MarkdownNavbar extends Component {
     );
 
     if (this.props.updateHashAuto) {
-      window.location.hash = curHeading.dataId;
+      this._updateHash(curHeading.dataId);
     }
     this.setState({
       currentListNo: curHeading.listNo,
     });
   };
+
+  _updateHash(value) {
+    history.replaceState({}, '', `${location.pathname}#${value}`);
+  }
 
   render() {
     const tBlocks = this._getNavStructure().map(t => {
@@ -214,9 +217,9 @@ export class MarkdownNavbar extends Component {
           className={cls}
           onClick={evt => {
             evt.preventDefault();
-            window.location.hash = this.props.declarative
-              ? t.text
-              : `heading-${t.index}`;
+            this._updateHash(
+              this.props.declarative ? t.text : `heading-${t.index}`
+            );
             this._scrollToTarget(
               this.props.declarative ? t.text : `heading-${t.index}`
             );
