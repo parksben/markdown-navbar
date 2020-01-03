@@ -25,7 +25,7 @@
     "rimraf": "^2.6.2"
   },
   "name": "markdown-navbar",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Best markdown navigation bar for React.",
   "main": "dist/index.js",
   "repository": {
