@@ -9,7 +9,7 @@ export class MarkdownNavbar extends Component {
     updateHashAuto: PropTypes.bool,
     declarative: PropTypes.bool,
     className: PropTypes.string,
-    onNavChange: PropTypes.func,
+    onNavItemClick: PropTypes.func,
     onHashChange: PropTypes.func,
   };
 
@@ -20,7 +20,7 @@ export class MarkdownNavbar extends Component {
     updateHashAuto: true,
     declarative: false,
     className: '',
-    onNavChange: () => {},
+    onNavItemClick: () => {},
     onHashChange: () => {},
   };
 
@@ -178,6 +178,8 @@ export class MarkdownNavbar extends Component {
     return headingList;
   }
 
+  _getCurrentHashValue = () => window.location.hash.replace(/^#/, '');
+
   _winScroll = () => {
     const scrollTop =
       window.pageYOffset ||
@@ -198,10 +200,10 @@ export class MarkdownNavbar extends Component {
     );
 
     if (this.props.updateHashAuto) {
-      this._updateHash(curHeading.dataId);
-
       // Hash changing callback
-      this.props.onHashChange(curHeading.dataId);
+      this.props.onHashChange(curHeading.dataId, this._getCurrentHashValue());
+
+      this._updateHash(curHeading.dataId);
     }
     this.setState({
       currentListNo: curHeading.listNo,
@@ -226,26 +228,24 @@ export class MarkdownNavbar extends Component {
         <div
           className={cls}
           onClick={evt => {
-            // Avoid the trigger of event callback `onNavChange` when clicking current nav item
-            if (t.listNo === this.state.currentListNo) {
-              return;
-            }
-
             const currentHash = this.props.declarative
               ? t.text
               : `heading-${t.index}`;
+
+            // Avoid execution the callback `onHashChange` when clicking current nav item
+            if (t.listNo !== this.state.currentListNo) {
+              // Hash changing callback
+              this.props.onHashChange(currentHash, this._getCurrentHashValue());
+            }
+
+            // Nav item clicking callback
+            this.props.onNavItemClick(evt, currentHash);
 
             this._updateHash(currentHash);
             this._scrollToTarget(currentHash);
             this.setState({
               currentListNo: t.listNo,
             });
-
-            // Nav changing callback
-            this.props.onNavChange(evt, currentHash);
-
-            // Hash changing callback
-            this.props.onHashChange(currentHash);
           }}
           key={`title_anchor_${Math.random()
             .toString(36)
