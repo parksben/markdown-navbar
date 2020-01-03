@@ -1,4 +1,3 @@
-import 'core-js/shim';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,6 +9,8 @@ export class MarkdownNavbar extends Component {
     updateHashAuto: PropTypes.bool,
     declarative: PropTypes.bool,
     className: PropTypes.string,
+    onNavChange: PropTypes.func,
+    onHashChange: PropTypes.func,
   };
 
   static defaultProps = {
@@ -19,6 +20,8 @@ export class MarkdownNavbar extends Component {
     updateHashAuto: true,
     declarative: false,
     className: '',
+    onNavChange: () => {},
+    onHashChange: () => {},
   };
 
   constructor(props) {
@@ -196,6 +199,9 @@ export class MarkdownNavbar extends Component {
 
     if (this.props.updateHashAuto) {
       this._updateHash(curHeading.dataId);
+
+      // Hash changing callback
+      this.props.onHashChange(curHeading.dataId);
     }
     this.setState({
       currentListNo: curHeading.listNo,
@@ -220,16 +226,26 @@ export class MarkdownNavbar extends Component {
         <div
           className={cls}
           onClick={evt => {
-            evt.preventDefault();
-            this._updateHash(
-              this.props.declarative ? t.text : `heading-${t.index}`
-            );
-            this._scrollToTarget(
-              this.props.declarative ? t.text : `heading-${t.index}`
-            );
+            // Avoid the trigger of event callback `onNavChange` when clicking current nav item
+            if (t.listNo === this.state.currentListNo) {
+              return;
+            }
+
+            const currentHash = this.props.declarative
+              ? t.text
+              : `heading-${t.index}`;
+
+            this._updateHash(currentHash);
+            this._scrollToTarget(currentHash);
             this.setState({
               currentListNo: t.listNo,
             });
+
+            // Nav changing callback
+            this.props.onNavChange(evt, currentHash);
+
+            // Hash changing callback
+            this.props.onHashChange(currentHash);
           }}
           key={`title_anchor_${Math.random()
             .toString(36)

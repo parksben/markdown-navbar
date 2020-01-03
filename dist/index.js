@@ -33,8 +33,6 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-require('core-js/shim');
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -71,6 +69,9 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
 
       if (_this.props.updateHashAuto) {
         _this._updateHash(curHeading.dataId);
+
+        // Hash changing callback
+        _this.props.onHashChange(curHeading.dataId);
       }
       _this.setState({
         currentListNo: curHeading.listNo
@@ -251,12 +252,24 @@ var MarkdownNavbar = exports.MarkdownNavbar = function (_Component) {
           {
             className: cls,
             onClick: function onClick(evt) {
-              evt.preventDefault();
-              _this6._updateHash(_this6.props.declarative ? t.text : 'heading-' + t.index);
-              _this6._scrollToTarget(_this6.props.declarative ? t.text : 'heading-' + t.index);
+              // Avoid the trigger of event callback `onNavChange` when clicking current nav item
+              if (t.listNo === _this6.state.currentListNo) {
+                return;
+              }
+
+              var currentHash = _this6.props.declarative ? t.text : 'heading-' + t.index;
+
+              _this6._updateHash(currentHash);
+              _this6._scrollToTarget(currentHash);
               _this6.setState({
                 currentListNo: t.listNo
               });
+
+              // Nav changing callback
+              _this6.props.onNavChange(evt, currentHash);
+
+              // Hash changing callback
+              _this6.props.onHashChange(currentHash);
             },
             key: 'title_anchor_' + Math.random().toString(36).substring(2) },
           _this6.props.ordered ? _react2.default.createElement(
@@ -284,7 +297,9 @@ MarkdownNavbar.propTypes = {
   headingTopOffset: _propTypes2.default.number,
   updateHashAuto: _propTypes2.default.bool,
   declarative: _propTypes2.default.bool,
-  className: _propTypes2.default.string
+  className: _propTypes2.default.string,
+  onNavChange: _propTypes2.default.func,
+  onHashChange: _propTypes2.default.func
 };
 MarkdownNavbar.defaultProps = {
   source: '',
@@ -292,7 +307,9 @@ MarkdownNavbar.defaultProps = {
   headingTopOffset: 0,
   updateHashAuto: true,
   declarative: false,
-  className: ''
+  className: '',
+  onNavChange: function onNavChange() {},
+  onHashChange: function onHashChange() {}
 };
 exports.default = MarkdownNavbar;
 //# sourceMappingURL=index.js.map
