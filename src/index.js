@@ -186,7 +186,8 @@ export class MarkdownNavbar extends Component {
     return headingList;
   }
 
-  _getCurrentHashValue = () => window.location.hash.replace(/^#/, '');
+  _getCurrentHashValue = () =>
+    decodeURIComponent(window.location.hash.replace(/^#/, ''));
 
   _winScroll = () => {
     const scrollTop =
@@ -209,7 +210,9 @@ export class MarkdownNavbar extends Component {
 
     if (this.props.updateHashAuto) {
       // Hash changing callback
-      this.props.onHashChange(curHeading.dataId, this._getCurrentHashValue());
+      if (curHeading.dataId !== this._getCurrentHashValue()) {
+        this.props.onHashChange(curHeading.dataId, this._getCurrentHashValue());
+      }
 
       this._updateHash(curHeading.dataId);
     }
