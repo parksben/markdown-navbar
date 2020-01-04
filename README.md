@@ -11,29 +11,13 @@ Best markdown navbar component for React. With this component, you can:
 - Click on the anchor point in the directory to jump to the corresponding article content
 - Share url with anchor hash value to reader
 
-## Screenshots
+## 🍿 Install
 
-![Screenshots](./screenshot.png)
-
-[Demo online](https://parksben.github.io/post/2019-01-15T06:01:11_barrage-ui)
-
-## Instructions
-
-This UI component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
-
-## Install
-
-```
-yarn add markdown-navbar
+```bash
+yarn add markdown-navbar # or `npm i markdown-navbar --save`
 ```
 
-or
-
-```
-npm install markdown-navbar
-```
-
-## Usage
+## 🌭 Quick Start
 
 ```js
 import MarkNav from 'markdown-navbar';
@@ -44,7 +28,13 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 <MarkNav className="article-menu" source={content} headingTopOffset={80} />;
 ```
 
-## Props
+## 🍭 Demo Online
+
+![Screenshots](./assets/demo-online.jpg)
+
+[![Edit markdown-navbar-demo-online](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark)
+
+## 🍔 Props
 
 |     Property     | Data Type |      Default Value       |                                       Description                                        |
 | :--------------: | :-------: | :----------------------: | :--------------------------------------------------------------------------------------: |
@@ -57,6 +47,16 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 |  onNavItemClick  | function  | (event, hashValue) => {} |                  The event callback function after clicking navbar item                  |
 |   onHashChange   | function  | (newHash, oldHash) => {} |      The event callback function before the hash value of browser address changing       |
 
-## License
+## 🧀 Important Instructions
+
+* This UI component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
+* Please confirm that every title of your markdown document is different by each other when the property `declarative` is setted as `true`.
+
+## 🍺 License
 
 [MIT license](./LICENSE)
+
+## ☕️ Donate me a coffee
+
+<img width="auto" height="240" src="./assets/wechat.jpg" alt="wechat" />
+<img width="auto" height="240" src="./assets/alipay.jpg" alt="alipay" />
