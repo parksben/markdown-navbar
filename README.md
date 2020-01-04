@@ -58,5 +58,7 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 
 ## ☕️ Donate me a coffee
 
-<img width="auto" height="240" src="./assets/wechat.jpg" alt="wechat" />
-<img width="auto" height="240" src="./assets/alipay.jpg" alt="alipay" />
+<div style="overflow: hidden;">
+  <img style="display: inline-block;" width="auto" height="240" src="./assets/wechat.jpg" alt="wechat" />
+  <img style="display: inline-block;" width="auto" height="240" src="./assets/alipay.jpg" alt="alipay" />
+</div>
