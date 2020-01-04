@@ -1,5 +1,5 @@
-<a name="1.2.1"></a>
-## [1.2.1](https://github.com/parksben/markdown-navbar/compare/8e4e2d9...v1.2.1) (2020-01-03)
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/parksben/markdown-navbar/compare/8e4e2d9...v1.2.2) (2020-01-04)
 
 
 ### Bug Fixes
