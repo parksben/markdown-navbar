@@ -30,7 +30,11 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 
 ## 🍭 Demo Online
 
-![Screenshots](./assets/demo-online.jpg)
+Click the thumbnail below to view the demo online:
+
+[![Demo on Netlify](https://screenshots.codesandbox.io/e7e0n.png)](https://csb-e7e0n.netlify.com/)
+
+Click the button below to edit & debug it:
 
 [![Edit markdown-navbar-demo-online](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark)
 
@@ -49,8 +53,8 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 
 ## 🧀 Important Instructions
 
-* This UI component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
-* Please confirm that every title of your markdown document is different by each other when the property `declarative` is setted as `true`.
+- This UI component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
+- Please confirm that every title of your markdown document is different by each other when the property `declarative` is setted as `true`.
 
 ## 🍺 License
 
@@ -59,6 +63,6 @@ const content = '## Heading One...\n\n## Heading Two...\n';
 ## ☕️ Donate me a coffee
 
 <div style="overflow: hidden;">
-  <img style="display: inline-block;" width="auto" height="240" src="./assets/wechat.jpg" alt="wechat" />
-  <img style="display: inline-block;" width="auto" height="240" src="./assets/alipay.jpg" alt="alipay" />
+  <img style="display: inline-block;" width="auto" height="240" src="https://github.com/parksben/markdown-navbar/blob/master/assets/wechat.jpg?raw=true" alt="wechat" />
+  <img style="display: inline-block;" width="auto" height="240" src="https://github.com/parksben/markdown-navbar/blob/master/assets/alipay.jpg?raw=true" alt="alipay" />
 </div>
