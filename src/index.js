@@ -41,8 +41,10 @@ export class MarkdownNavbar extends Component {
     }, 1e3);
   }
 
-  shouldComponentUpdate() {
-    this._initheadingsId(false);
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.source !== this.props.source) {
+      this._initheadingsId();
+    }
     return true;
   }
 
@@ -126,7 +128,13 @@ export class MarkdownNavbar extends Component {
     }, 1e2);
   }
 
-  _initheadingsId(goTarget = true) {
+  _initheadingsId() {
+    const headingId = decodeURIComponent(
+      this.props.declarative
+        ? window.location.hash.replace(/^#/, '').trim()
+        : (window.location.hash.match(/heading-\d+/g) || [])[0]
+    );
+
     this._getNavStructure().forEach(t => {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curheading = Array.prototype.slice
@@ -144,17 +152,11 @@ export class MarkdownNavbar extends Component {
           : `heading-${t.index}`;
       }
 
-      const headingId = this.props.declarative
-        ? window.location.hash.replace(/^#/, '').trim()
-        : (window.location.hash.match(/heading-\d+/g) || [])[0];
-
       if (headingId && headingId === curheading.dataset.id) {
-        if (goTarget) {
-          this._scrollToTarget(headingId);
-          this.setState({
-            currentListNo: t.listNo,
-          });
-        }
+        this._scrollToTarget(headingId);
+        this.setState({
+          currentListNo: t.listNo,
+        });
       }
     });
   }
