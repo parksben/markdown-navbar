@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export class MarkdownNavbar extends Component {
   static propTypes = {
-    source: PropTypes.string,
+    source: PropTypes.string.isRequired,
     ordered: PropTypes.bool,
     headingTopOffset: PropTypes.number,
     updateHashAuto: PropTypes.bool,
@@ -31,7 +31,7 @@ export class MarkdownNavbar extends Component {
     };
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     if (this.addTargetTimeout) {
       clearTimeout(this.addTargetTimeout);
     }
@@ -39,6 +39,11 @@ export class MarkdownNavbar extends Component {
       this._initheadingsId();
       document.addEventListener('scroll', this._winScroll, false);
     }, 1e3);
+  }
+
+  shouldComponentUpdate() {
+    this._initheadingsId(false);
+    return true;
   }
 
   componentWillUnmount() {
@@ -52,10 +57,9 @@ export class MarkdownNavbar extends Component {
   }
 
   _getNavStructure() {
-    const contentWithoutCode = this.props.source.replace(
-      /```[^`\n]*\n+[^```]+```\n+/g,
-      ''
-    );
+    const contentWithoutCode = this.props.source
+      .replace(/^#\s[^#\n]*\n+/, '')
+      .replace(/```[^`\n]*\n+[^```]+```\n+/g, '');
 
     const pattOfTitle = /#+\s([^#\n]+)\n*/g;
     const matchResult = contentWithoutCode.match(pattOfTitle);
@@ -122,7 +126,7 @@ export class MarkdownNavbar extends Component {
     }, 1e2);
   }
 
-  _initheadingsId() {
+  _initheadingsId(goTarget = true) {
     this._getNavStructure().forEach(t => {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curheading = Array.prototype.slice
@@ -145,10 +149,12 @@ export class MarkdownNavbar extends Component {
         : (window.location.hash.match(/heading-\d+/g) || [])[0];
 
       if (headingId && headingId === curheading.dataset.id) {
-        this._scrollToTarget(headingId);
-        this.setState({
-          currentListNo: t.listNo,
-        });
+        if (goTarget) {
+          this._scrollToTarget(headingId);
+          this.setState({
+            currentListNo: t.listNo,
+          });
+        }
       }
     });
   }
@@ -211,7 +217,7 @@ export class MarkdownNavbar extends Component {
   };
 
   _updateHash(value) {
-    history.replaceState(
+    window.history.replaceState(
       {},
       '',
       `${window.location.pathname}${window.location.search}#${value}`
