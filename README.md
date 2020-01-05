@@ -22,10 +22,11 @@ yarn add markdown-navbar # or `npm i markdown-navbar --save`
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactMarkdown from 'react-markdown'; // One third-part component for render markdown documentation
+// One third-part component for render markdown documentation
+import ReactMarkdown from 'react-markdown';
 import MarkdownNavbar from 'markdown-navbar';
-
-import 'markdown-navbar/dist/navbar.css'; // The default style of markdown-navbar should be imported additionally
+// The default style of markdown-navbar should be imported additionally
+import 'markdown-navbar/dist/navbar.css';
 
 const article = `# Markdown-Navbar Demo
 
