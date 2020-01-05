@@ -19,13 +19,46 @@ yarn add markdown-navbar # or `npm i markdown-navbar --save`
 
 ## 🌭 Quick Start
 
-```js
-import MarkNav from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactMarkdown from 'react-markdown'; // One third-part component for render markdown documentation
+import MarkdownNavbar from 'markdown-navbar';
 
-const content = '## Heading One...\n\n## Heading Two...\n';
+import 'markdown-navbar/dist/navbar.css'; // The default style of markdown-navbar should be imported additionally
 
-<MarkNav className="article-menu" source={content} headingTopOffset={80} />;
+const article = `# Markdown-Navbar Demo
+
+## Chicken Chicken
+
+Chicken Chicken Chicken Chicken Chicken.
+
+* Chicken Chicken Chicken Chicken Chicken.
+* Chicken Chicken Chicken Chicken Chicken.
+* Chicken Chicken Chicken Chicken Chicken.
+
+### Chicken Chicken Chicken
+
+Chicken Chicken Chicken Chicken Chicken.
+
+#### Chicken Chicken Chicken Chicken
+
+Chicken Chicken Chicken Chicken Chicken Chicken.`;
+
+function App() {
+  return (
+    <div className="App">
+      <div className="article">
+        <ReactMarkdown source={article} />
+      </div>
+      <div className="navigation">
+        <MarkdownNavbar source={article} declarative />
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ## 🍭 Demo Online
@@ -40,16 +73,16 @@ Click the button below to edit & debug it:
 
 ## 🍔 Props
 
-|     Property     | Data Type |      Default Value       |                                       Description                                        |
-| :--------------: | :-------: | :----------------------: | :--------------------------------------------------------------------------------------: |
-|    className     |  string   |            ""            |               The className that defines the outermost container of navbar               |
-|      source      |  string   |            ""            |                                  Markdown text content                                   |
-| headingTopOffset |  number   |            0             |       Anchor displacement relative to the top of the window (for the anchor jump)        |
-|  updateHashAuto  |  boolean  |           true           |    Automatically update the hash value of browser address when page scrolling if true    |
-|   declarative    |  boolean  |          false           | Use the text of the title from Markdown content as the hash value for the anchor if true |
-|     ordered      |  boolean  |           true           |           Whether the title contains a numerical prefix, such as: `1. 2. 2.2`            |
-|  onNavItemClick  | function  | (event, hashValue) => {} |                  The event callback function after clicking navbar item                  |
-|   onHashChange   | function  | (newHash, oldHash) => {} |      The event callback function before the hash value of browser address changing       |
+|     Property     | Data Type |           Default Value           |                                       Description                                        |
+| :--------------: | :-------: | :-------------------------------: | :--------------------------------------------------------------------------------------: |
+|    className     |  string   |                ""                 |               The className that defines the outermost container of navbar               |
+|      source      |  string   |                ""                 |                                  Markdown text content                                   |
+| headingTopOffset |  number   |                 0                 |       Anchor displacement relative to the top of the window (for the anchor jump)        |
+|  updateHashAuto  |  boolean  |               true                |    Automatically update the hash value of browser address when page scrolling if true    |
+|   declarative    |  boolean  |               false               | Use the text of the title from Markdown content as the hash value for the anchor if true |
+|     ordered      |  boolean  |               true                |           Whether the title contains a numerical prefix, such as: `1. 2. 2.2`            |
+|  onNavItemClick  | function  | (event, element, hashValue) => {} |                  The event callback function after clicking navbar item                  |
+|   onHashChange   | function  |     (newHash, oldHash) => {}      |      The event callback function before the hash value of browser address changing       |
 
 ## 🧀 Important Instructions
 

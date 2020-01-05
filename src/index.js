@@ -60,8 +60,13 @@ export class MarkdownNavbar extends Component {
 
   _getNavStructure() {
     const contentWithoutCode = this.props.source
+      .replace(/^[^#]+\n/g, '')
       .replace(/^#\s[^#\n]*\n+/, '')
-      .replace(/```[^`\n]*\n+[^```]+```\n+/g, '');
+      .replace(/```[^`\n]*\n+[^```]+```\n+/g, '')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\*\*?([^*]+)\*\*?/g, '$1')
+      .replace(/__?([^_]+)__?/g, '$1')
+      .trim();
 
     const pattOfTitle = /#+\s([^#\n]+)\n*/g;
     const matchResult = contentWithoutCode.match(pattOfTitle);
@@ -250,7 +255,7 @@ export class MarkdownNavbar extends Component {
             }
 
             // Nav item clicking callback
-            this.props.onNavItemClick(evt, currentHash);
+            this.props.onNavItemClick(evt, evt.target, currentHash);
 
             this._updateHash(currentHash);
             this._scrollToTarget(currentHash);
