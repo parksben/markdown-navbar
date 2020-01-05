@@ -1,10 +1,20 @@
-<a name="1.3.3"></a>
-## [1.3.3](https://github.com/parksben/markdown-navbar/compare/1.3.2...v1.3.3) (2020-01-04)
+<a name="1.3.4"></a>
+## [1.3.4](https://github.com/parksben/markdown-navbar/compare/1.3.2...v1.3.4) (2020-01-05)
+
+
+### Bug Fixes
+
+* serial number parse error when some content exists before level 1 title ([35a234f](https://github.com/parksben/markdown-navbar/commit/35a234f))
 
 
 
 <a name="1.3.2"></a>
-## [1.3.2](https://github.com/parksben/markdown-navbar/compare/8e4e2d9...1.3.2) (2020-01-04)
+## [1.3.2](https://github.com/parksben/markdown-navbar/compare/v1.3.1...1.3.2) (2020-01-04)
+
+
+
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/parksben/markdown-navbar/compare/8e4e2d9...v1.3.1) (2020-01-04)
 
 
 ### Bug Fixes
