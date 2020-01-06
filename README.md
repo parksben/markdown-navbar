@@ -11,6 +11,20 @@ Best markdown navbar component for React. With this component, you can:
 - Click on the anchor point in the directory to jump to the corresponding article content
 - Share url with anchor hash value to reader
 
+## 🍭 Demo Online
+
+Click the thumbnail below to view the demo online:
+
+<a href="https://csb-e7e0n.netlify.com/" target="_blank" style="display: inline-block; margin-bottom: 32px;">
+  <img src="https://screenshots.codesandbox.io/e7e0n.png" alt="Demo on Netlify" style="width: 360px; border-radius: 5px; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.32);">
+</a>
+
+Click the button below to edit & debug it:
+
+<a href="https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark" target="_blank">
+  <img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit markdown-navbar-demo-online">
+</a>
+
 ## 🍿 Install
 
 ```bash
@@ -61,16 +75,6 @@ function App() {
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
-
-## 🍭 Demo Online
-
-Click the thumbnail below to view the demo online:
-
-[![Demo on Netlify](https://screenshots.codesandbox.io/e7e0n.png)](https://csb-e7e0n.netlify.com/)
-
-Click the button below to edit & debug it:
-
-[![Edit markdown-navbar-demo-online](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark)
 
 ## 🍔 Props
 

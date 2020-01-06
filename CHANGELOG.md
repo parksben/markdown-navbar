@@ -1,10 +1,11 @@
-<a name="1.3.4"></a>
-## [1.3.4](https://github.com/parksben/markdown-navbar/compare/1.3.2...v1.3.4) (2020-01-05)
+<a name="1.3.5"></a>
+## [1.3.5](https://github.com/parksben/markdown-navbar/compare/1.3.2...1.3.5) (2020-01-06)
 
 
 ### Bug Fixes
 
 * serial number parse error when some content exists before level 1 title ([35a234f](https://github.com/parksben/markdown-navbar/commit/35a234f))
+* some data-id of heading elements not registered while two or multi same text of headings exist in one documentation ([cedf928](https://github.com/parksben/markdown-navbar/commit/cedf928))
 
 
 
