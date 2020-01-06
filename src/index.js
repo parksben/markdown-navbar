@@ -63,9 +63,9 @@ export class MarkdownNavbar extends Component {
       .replace(/^[^#]+\n/g, '')
       .replace(/^#\s[^#\n]*\n+/, '')
       .replace(/```[^`\n]*\n+[^```]+```\n+/g, '')
-      .replace(/`([^`]+)`/g, '$1')
-      .replace(/\*\*?([^*]+)\*\*?/g, '$1')
-      .replace(/__?([^_]+)__?/g, '$1')
+      .replace(/`([^`\n]+)`/g, '$1')
+      .replace(/\*\*?([^*\n]+)\*\*?/g, '$1')
+      .replace(/__?([^_\n]+)__?/g, '$1')
       .trim();
 
     const pattOfTitle = /#+\s([^#\n]+)\n*/g;
@@ -148,7 +148,8 @@ export class MarkdownNavbar extends Component {
           h =>
             h.innerText
               .replace(/^(\d+\.)+\s?/g, '')
-              .replace(/^\d+\.?\s?/g, '') === t.text
+              .replace(/^\d+\.?\s?/g, '') === t.text &&
+            (!h.dataset || !h.dataset.id)
         );
 
       if (curheading) {
@@ -177,7 +178,8 @@ export class MarkdownNavbar extends Component {
           h =>
             h.innerText
               .replace(/^(\d+\.)+\s?/g, '')
-              .replace(/^\d+\.?\s?/g, '') === t.text
+              .replace(/^\d+\.?\s?/g, '') === t.text &&
+            !headingList.find(x => x.offsetTop === h.offsetTop)
         );
       if (curheading) {
         headingList.push({
