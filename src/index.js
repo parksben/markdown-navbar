@@ -156,13 +156,13 @@ export class MarkdownNavbar extends Component {
         curheading.dataset.id = this.props.declarative
           ? t.text
           : `heading-${t.index}`;
-      }
 
-      if (headingId && headingId === curheading.dataset.id) {
-        this._scrollToTarget(headingId);
-        this.setState({
-          currentListNo: t.listNo,
-        });
+        if (headingId && headingId === curheading.dataset.id) {
+          this._scrollToTarget(headingId);
+          this.setState({
+            currentListNo: t.listNo,
+          });
+        }
       }
     });
   }
