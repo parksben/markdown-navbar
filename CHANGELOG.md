@@ -1,5 +1,10 @@
-<a name="1.3.6"></a>
-## [1.3.6](https://github.com/parksben/markdown-navbar/compare/1.3.5...v1.3.6) (2020-01-08)
+<a name="1.3.7"></a>
+## [1.3.7](https://github.com/parksben/markdown-navbar/compare/1.3.5...v1.3.7) (2020-01-09)
+
+
+### Bug Fixes
+
+* the dataset.id of headings not be updated correctly after markdown source changed ([a175e73](https://github.com/parksben/markdown-navbar/commit/a175e73))
 
 
 
