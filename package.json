@@ -33,9 +33,12 @@
     "url": "git+ssh://git@github.com/parksben/markdown-navbar.git"
   },
   "keywords": [
-    "react",
     "markdown",
-    "navbar"
+    "navigation",
+    "navigator",
+    "navbar",
+    "menu",
+    "react"
   ],
   "author": "parksben",
   "license": "MIT"
