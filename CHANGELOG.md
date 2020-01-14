@@ -1,5 +1,10 @@
-<a name="1.3.8"></a>
-## [1.3.8](https://github.com/parksben/markdown-navbar/compare/1.3.7...v1.3.8) (2020-01-14)
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/parksben/markdown-navbar/compare/1.3.7...v1.4.0) (2020-01-14)
+
+
+### Features
+
+* scroll page to target heading when event `hashchange` has been triggered ([e76941d](https://github.com/parksben/markdown-navbar/commit/e76941d))
 
 
 
