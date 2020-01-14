@@ -67,7 +67,7 @@ function App() {
         <ReactMarkdown source={article} />
       </div>
       <div className="navigation">
-        <MarkdownNavbar source={article} declarative />
+        <MarkdownNavbar source={article} />
       </div>
     </div>
   );

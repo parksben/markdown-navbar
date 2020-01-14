@@ -130,7 +130,7 @@ export class MarkdownNavbar extends Component {
     const result = navData.map(nav => ({
       ...nav,
       listNo: nav.listNo.indexOf('.') < 0 ? `${nav.listNo}.` : nav.listNo,
-      text: nav.text.replace(/^(\d+\.)+\s?/g, '').replace(/^\d+\.?\s?/g, ''),
+      text: nav.text,
     }));
 
     return result;
@@ -158,13 +158,7 @@ export class MarkdownNavbar extends Component {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curHeading = Array.prototype.slice
         .apply(headings)
-        .find(
-          h =>
-            h.innerText
-              .replace(/^(\d+\.)+\s?/g, '')
-              .replace(/^\d+\.?\s?/g, '') === t.text &&
-            (!h.dataset || !h.dataset.id)
-        );
+        .find(h => h.innerText === t.text && (!h.dataset || !h.dataset.id));
 
       if (curHeading) {
         curHeading.dataset.id = this.props.declarative
@@ -190,9 +184,7 @@ export class MarkdownNavbar extends Component {
         .apply(headings)
         .find(
           h =>
-            h.innerText
-              .replace(/^(\d+\.)+\s?/g, '')
-              .replace(/^\d+\.?\s?/g, '') === t.text &&
+            h.innerText === t.text &&
             !headingList.find(x => x.offsetTop === h.offsetTop)
         );
       if (curHeading) {
