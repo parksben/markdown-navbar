@@ -38,6 +38,7 @@ export class MarkdownNavbar extends Component {
     this.addTargetTimeout = setTimeout(() => {
       this.initHeadingsId();
       document.addEventListener('scroll', this.winScroll, false);
+      window.addEventListener('hashchange', this.winHashChange, false);
     }, 500);
   }
 
@@ -71,6 +72,7 @@ export class MarkdownNavbar extends Component {
       clearTimeout(this.scrollTimeout);
     }
     document.removeEventListener('scroll', this.winScroll, false);
+    window.removeEventListener('hashchange', this.winHashChange, false);
   }
 
   getNavStructure() {
@@ -143,7 +145,9 @@ export class MarkdownNavbar extends Component {
 
     this.scrollTimeout = setTimeout(() => {
       const target = document.querySelector(`[data-id="${dataId}"]`);
-      window.scrollTo(0, target.offsetTop - this.props.headingTopOffset);
+      if (target && typeof target.offsetTop === 'number') {
+        window.scrollTo(0, target.offsetTop - this.props.headingTopOffset);
+      }
     }, 0);
   }
 
@@ -234,6 +238,10 @@ export class MarkdownNavbar extends Component {
     this.setState({
       currentListNo: curHeading.listNo,
     });
+  };
+
+  winHashChange = () => {
+    this.scrollToTarget(this.getCurrentHashValue());
   };
 
   updateHash(value) {
