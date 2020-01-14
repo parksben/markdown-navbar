@@ -1,5 +1,10 @@
+<a name="1.3.8"></a>
+## [1.3.8](https://github.com/parksben/markdown-navbar/compare/1.3.7...v1.3.8) (2020-01-14)
+
+
+
 <a name="1.3.7"></a>
-## [1.3.7](https://github.com/parksben/markdown-navbar/compare/1.3.5...v1.3.7) (2020-01-09)
+## [1.3.7](https://github.com/parksben/markdown-navbar/compare/1.3.5...1.3.7) (2020-01-09)
 
 
 ### Bug Fixes
