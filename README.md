@@ -97,10 +97,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ## 🍺 License
 
 [MIT license](./LICENSE)
-
-## ☕️ Donate me a coffee
-
-<div style="overflow: hidden;">
-  <img style="display: inline-block;" width="auto" height="240" src="https://github.com/parksben/markdown-navbar/blob/master/assets/wechat.jpg?raw=true" alt="wechat" />
-  <img style="display: inline-block;" width="auto" height="240" src="https://github.com/parksben/markdown-navbar/blob/master/assets/alipay.jpg?raw=true" alt="alipay" />
-</div>

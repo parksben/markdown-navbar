@@ -245,11 +245,17 @@ export class MarkdownNavbar extends Component {
   };
 
   updateHash(value) {
-    window.history.replaceState(
-      {},
-      '',
-      `${window.location.pathname}${window.location.search}#${value}`
-    );
+    if (this.updateHashTimeout) {
+      clearTimeout(this.updateHashTimeout);
+    }
+
+    this.updateHashTimeout = setTimeout(() => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}${window.location.search}#${value}`
+      );
+    }, 0);
   }
 
   render() {
