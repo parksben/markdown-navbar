@@ -78,6 +78,7 @@ export class MarkdownNavbar extends Component {
   getNavStructure() {
     const contentWithoutCode = this.props.source
       .replace(/^[^#]+\n/g, '')
+      .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, '') // 匹配行内出现 # 号的情况
       .replace(/^#\s[^#\n]*\n+/, '')
       .replace(/```[^`\n]*\n+[^```]+```\n+/g, '')
       .replace(/`([^`\n]+)`/g, '$1')
@@ -162,7 +163,11 @@ export class MarkdownNavbar extends Component {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curHeading = Array.prototype.slice
         .apply(headings)
-        .find(h => h.innerText === t.text && (!h.dataset || !h.dataset.id));
+        .find(
+          h =>
+            h.innerText.trim() === t.text.trim() &&
+            (!h.dataset || !h.dataset.id)
+        );
 
       if (curHeading) {
         curHeading.dataset.id = this.props.declarative
@@ -188,7 +193,7 @@ export class MarkdownNavbar extends Component {
         .apply(headings)
         .find(
           h =>
-            h.innerText === t.text &&
+            h.innerText.trim() === t.text.trim() &&
             !headingList.find(x => x.offsetTop === h.offsetTop)
         );
       if (curHeading) {
