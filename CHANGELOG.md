@@ -1,10 +1,16 @@
-<a name="1.4.1"></a>
-## [1.4.1](https://github.com/parksben/markdown-navbar/compare/1.3.7...v1.4.1) (2020-03-30)
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/parksben/markdown-navbar/compare/1.4.0...v1.4.2) (2020-05-24)
 
 
 ### Bug Fixes
 
 * the exception in Safari due to too many calls to the history.replacestate method ([2834372](https://github.com/parksben/markdown-navbar/commit/2834372))
+* 非标题行内出现#号导致的导航解析不正确 ([074cb10](https://github.com/parksben/markdown-navbar/commit/074cb10))
+
+
+
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/parksben/markdown-navbar/compare/1.3.7...1.4.0) (2020-01-14)
 
 
 ### Features
