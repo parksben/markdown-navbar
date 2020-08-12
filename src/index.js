@@ -54,7 +54,7 @@ export class MarkdownNavbar extends Component {
         currentListNo: '',
       });
       const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      Array.prototype.slice.apply(headings).forEach(h => (h.dataset.id = ''));
+      Array.prototype.slice.apply(headings).forEach((h) => (h.dataset.id = ''));
 
       this.scrollEventLockTimer = setTimeout(() => {
         this.initHeadingsId();
@@ -99,7 +99,8 @@ export class MarkdownNavbar extends Component {
       text: r.replace(pattOfTitle, '$1'),
     }));
 
-    const levelCount = level => navData.filter(r => r.level === level).length;
+    const levelCount = (level) =>
+      navData.filter((r) => r.level === level).length;
     let startLevel = 1;
     let startLevelCount = levelCount(startLevel);
     while (!startLevelCount) {
@@ -108,7 +109,7 @@ export class MarkdownNavbar extends Component {
     }
 
     let listNo = 1;
-    navData.forEach(t => {
+    navData.forEach((t) => {
       if (t.level === startLevel) {
         t.listNo = listNo.toString();
         listNo += 1;
@@ -130,7 +131,7 @@ export class MarkdownNavbar extends Component {
       }
     });
 
-    const result = navData.map(nav => ({
+    const result = navData.map((nav) => ({
       ...nav,
       listNo: nav.listNo.indexOf('.') < 0 ? `${nav.listNo}.` : nav.listNo,
       text: nav.text,
@@ -159,12 +160,12 @@ export class MarkdownNavbar extends Component {
         : (window.location.hash.match(/heading-\d+/g) || [])[0]
     );
 
-    this.getNavStructure().forEach(t => {
+    this.getNavStructure().forEach((t) => {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curHeading = Array.prototype.slice
         .apply(headings)
         .find(
-          h =>
+          (h) =>
             h.innerText.trim() === t.text.trim() &&
             (!h.dataset || !h.dataset.id)
         );
@@ -187,14 +188,14 @@ export class MarkdownNavbar extends Component {
   getHeadingList() {
     const headingList = [];
 
-    this.getNavStructure().forEach(t => {
+    this.getNavStructure().forEach((t) => {
       const headings = document.querySelectorAll(`h${t.level}`);
       const curHeading = Array.prototype.slice
         .apply(headings)
         .find(
-          h =>
+          (h) =>
             h.innerText.trim() === t.text.trim() &&
-            !headingList.find(x => x.offsetTop === h.offsetTop)
+            !headingList.find((x) => x.offsetTop === h.offsetTop)
         );
       if (curHeading) {
         headingList.push({
@@ -220,17 +221,19 @@ export class MarkdownNavbar extends Component {
       document.body.scrollTop ||
       0;
 
-    const newHeadingList = this.getHeadingList().map(h => ({
+    const newHeadingList = this.getHeadingList().map((h) => ({
       ...h,
       distanceToTop: Math.abs(
         scrollTop + this.props.headingTopOffset - h.offsetTop
       ),
     }));
-    const distanceList = newHeadingList.map(h => h.distanceToTop);
+    const distanceList = newHeadingList.map((h) => h.distanceToTop);
     const minDistance = Math.min(...distanceList);
     const curHeading = newHeadingList.find(
-      h => h.distanceToTop === minDistance
+      (h) => h.distanceToTop === minDistance
     );
+
+    if (!curHeading) return;
 
     if (this.props.updateHashAuto) {
       // Hash changing callback
@@ -264,7 +267,7 @@ export class MarkdownNavbar extends Component {
   }
 
   render() {
-    const tBlocks = this.getNavStructure().map(t => {
+    const tBlocks = this.getNavStructure().map((t) => {
       const cls = `title-anchor title-level${t.level} ${
         this.state.currentListNo === t.listNo ? 'active' : ''
       }`;
@@ -272,7 +275,7 @@ export class MarkdownNavbar extends Component {
       return (
         <div
           className={cls}
-          onClick={evt => {
+          onClick={(evt) => {
             const currentHash = this.props.declarative
               ? t.text
               : `heading-${t.index}`;
@@ -292,9 +295,7 @@ export class MarkdownNavbar extends Component {
               currentListNo: t.listNo,
             });
           }}
-          key={`title_anchor_${Math.random()
-            .toString(36)
-            .substring(2)}`}>
+          key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
           {this.props.ordered ? <small>{t.listNo}</small> : null}
           {t.text}
         </div>

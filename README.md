@@ -5,33 +5,27 @@
 ![npm](https://img.shields.io/npm/v/markdown-navbar/latest.svg)
 ![GitHub file size in bytes](https://img.shields.io/github/size/parksben/markdown-navbar/src/index.js)
 
-Best markdown navbar component for React. With this component, you can:
+A React component renders an interactive navbar panel of Markdown docs for your blog or website.
 
-- Display article directory for readers
-- Click on the anchor point in the directory to jump to the corresponding article content
-- Share url with anchor hash value to reader
+[![Demo on Netlify](https://screenshots.codesandbox.io/e7e0n.png)](https://csb-e7e0n.netlify.com/)
 
-## 🍭 Demo Online
+## Features
 
-Click the thumbnail below to view the demo online:
+Implement some regular functions easily by using this component, such as:
 
-<a href="https://csb-e7e0n.netlify.com/" target="_blank" style="display: inline-block; margin-bottom: 32px;">
-  <img src="https://screenshots.codesandbox.io/e7e0n.png" alt="Demo on Netlify" style="width: 360px; border-radius: 5px; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.32);">
-</a>
+- Display the structure tree of your article defined by the headings.
+- Render anchors that navigate to specific headings in the article.
+- Share one URL to readers to navigate to a specific area of the article.
 
-Click the button below to edit & debug it:
-
-<a href="https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark" target="_blank">
-  <img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit markdown-navbar-demo-online">
-</a>
-
-## 🍿 Install
+## Install
 
 ```bash
 yarn add markdown-navbar # or `npm i markdown-navbar --save`
 ```
 
-## 🌭 Quick Start
+## Quickstart
+
+[![Edit markdown-navbar-demo-online](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/markdown-navbar-demo-online-e7e0n?fontsize=14&hidenavigation=1&theme=dark)
 
 ```jsx
 import React from 'react';
@@ -76,7 +70,13 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-## 🍔 Props
+## Tips
+
+- The component only parses article headings at level 2 and below. The article title, which is usually used once in an article, will not appear in the navigation bar.
+- The component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
+- Please confirm that every heading of your markdown document is different by each other when the value of property `declarative` is setted as `true`.
+
+## Props
 
 |     Property     | Data Type |           Default Value           |                                       Description                                        |
 | :--------------: | :-------: | :-------------------------------: | :--------------------------------------------------------------------------------------: |
@@ -89,11 +89,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 |  onNavItemClick  | function  | (event, element, hashValue) => {} |                  The event callback function after clicking navbar item                  |
 |   onHashChange   | function  |     (newHash, oldHash) => {}      |      The event callback function before the hash value of browser address changing       |
 
-## 🧀 Important Instructions
-
-- This UI component needs to be used in **conjunction** with your article content. When using this component, you must ensure that your article under the same page content.
-- Please confirm that every title of your markdown document is different by each other when the property `declarative` is setted as `true`.
-
-## 🍺 License
+## License
 
 [MIT license](./LICENSE)
