@@ -96,6 +96,20 @@ export class MarkdownNavbar extends Component {
         document.removeEventListener('scroll', this.winScroll, false);
         window.removeEventListener('hashchange', this.winHashChange, false);
     }
+    trimArrZero(arr){
+      let start,end
+      for(start = 0; start < arr.length ;start++){
+          if(arr[start]){
+              break
+          }
+      }
+      for(end = arr.length - 1 ;end >= 0 ; end--){
+          if(arr[end]){
+            break
+          }
+      }
+      return arr.slice(start,end + 1)
+  }
 
     getNavStructure(source) {
         const contentWithoutCode = source
@@ -142,7 +156,7 @@ export class MarkdownNavbar extends Component {
                     level,
                     arr,
                 })
-                t.listNo = arr.join('.');
+                t.listNo = this.trimArrZero(arr).join(".")
                 continue;
             }
             const { arr } = matchStack[matchStack.length - 1];
@@ -152,7 +166,7 @@ export class MarkdownNavbar extends Component {
                 level,
                 arr: newArr
             })
-            t.listNo = newArr.join('.')
+            t.listNo = this.trimArrZero(newArr).join(".")
         };
         return navData;
     }
