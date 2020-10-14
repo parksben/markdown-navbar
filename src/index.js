@@ -284,40 +284,42 @@ export class MarkdownNavbar extends Component {
     }
 
     render() {
-        const tBlocks = this.state.navStructure.map((t) => {
+      const tBlocks = this.getNavStructure().map((t) => {
+        const cls = `title-anchor title-level${t.level} ${
+          this.state.currentListNo === t.listNo ? 'active' : ''
+        }`;
+      
+        return (
+          <div
+            className={cls}
+                onClick={(evt) => {
+                const currentHash = this.props.declarative
+                    ? `${t.listNo}-${t.text}` // 加入listNo确保hash唯一ZZ
+                    : `heading-${t.index}`;
 
-            return (
-                <div
-                    className={`${style['title-anchor']} ${style[`title-level${t.level}`]} ${this.state.currentListNo === t.listNo ? style.active : ''}`}
-                    onClick={(evt) => {
-                        const currentHash = this.props.declarative
-                            ? `${t.listNo}-${t.text}` // 加入listNo确保hash唯一
-                            : `heading-${t.index}`;
+                // Avoid execution the callback `onHashChange` when clicking current nav item
+                if (t.listNo !== this.state.currentListNo) {
+                    // Hash changing callback
+                    this.props.onHashChange(currentHash, this.getCurrentHashValue());
+                }
 
-                        // Avoid execution the callback `onHashChange` when clicking current nav item
-                        if (t.listNo !== this.state.currentListNo) {
-                            // Hash changing callback
-                            this.props.onHashChange(currentHash, this.getCurrentHashValue());
-                        }
+                // Nav item clicking callback
+                this.props.onNavItemClick(evt, evt.target, currentHash);
 
-                        // Nav item clicking callback
-                        this.props.onNavItemClick(evt, evt.target, currentHash);
-
-                        this.updateHash(currentHash);
-                        this.scrollToTarget(currentHash);
-                        this.setState({
-                            currentListNo: t.listNo,
-                        });
-                    }}
-                    key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
-                    {this.props.ordered ? <small>{t.listNo}</small> : null}
-                    {t.text}
-                </div>
-            );
+                this.updateHash(currentHash);
+                this.scrollToTarget(currentHash);
+                this.setState({
+                    currentListNo: t.listNo,
+                });
+            }}
+              key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
+              {this.props.ordered ? <small>{t.listNo}</small> : null}
+              {t.text}
+        </div>);
         });
 
         return (
-            <div className={`${style[`markdown-navigation`]} ${this.props.className}`}>
+            <div className={`markdown-navigation ${this.props.className}`}>
                 {tBlocks}
             </div>
         );
