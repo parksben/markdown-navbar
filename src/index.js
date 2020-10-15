@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import style from './navbar.less'
 import { throttle } from 'lodash';
 
 export class MarkdownNavbar extends Component {
