@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import style from './navbar.less'
 import { throttle } from 'lodash';
 
 export class MarkdownNavbar extends Component {
@@ -34,6 +33,27 @@ export class MarkdownNavbar extends Component {
         };
     }
 
+    safeScrollTo(element,top,left = 0,smooth){
+      if(!element) return
+      if(typeof element.scrollTo === 'function' ){
+          const scrollConfig = {
+              top,
+              left,
+          }
+          if(smooth){
+              scrollConfig.behavior = "smooth"
+          }
+          element.scrollTo(scrollConfig)
+      } else{
+          if(element === window){
+              document.documentElement.scrollTop = top
+              document.documentElement.scrollLeft = left
+          } else{
+              element.scrollTop = top
+              element.scrollLeft = left
+          }
+      }
+    }
     refreshNav(source) {
         if (this.addTargetTimeout) {
             clearTimeout(this.addTargetTimeout);
@@ -71,7 +91,8 @@ export class MarkdownNavbar extends Component {
             }
             this.scrollEventLock = true;
 
-            window.scrollTo(0, 0);
+            this.safeScrollTo(window,0,0)
+            this.safeScrollTo(this.refs.container,0,0)
             this.setState({
                 currentListNo: '',
             });
@@ -179,7 +200,7 @@ export class MarkdownNavbar extends Component {
         this.scrollTimeout = setTimeout(() => {
             const target = document.querySelector(`[data-id="${dataId}"]`);
             if (target && typeof target.offsetTop === 'number') {
-                window.scrollTo(0, target.offsetTop - this.props.headingTopOffset);
+              this.safeScrollTo(window,target.offsetTop - this.props.headingTopOffset,0)           
             }
         }, 0);
     }
@@ -273,6 +294,17 @@ export class MarkdownNavbar extends Component {
             }
 
             this.updateHash(curHeading.dataId);
+        }
+        if(currentNavElement){
+          const {container} = this.refs
+          const {offsetTop} = currentNavElement
+          const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
+          const min = containerScrollTop + 0.3 * containerOffsetHeight
+          const max = containerScrollTop  + 0.7 * containerOffsetHeight
+          if(offsetTop < min || offsetTop > max){
+              const targetTop = offsetTop - 0.2 * containerOffsetHeight
+              this.safeScrollTo(container, targetTop,0,true)
+          }
         }
         this.setState({
             currentListNo: curHeading.listNo,
