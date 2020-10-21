@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core-js": "3",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react": "^16.12.0"
   },
