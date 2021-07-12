@@ -330,7 +330,7 @@ export class MarkdownNavbar extends Component {
     }
 
     render() {
-      const tBlocks = this.getNavStructure().map((t) => {
+      const tBlocks = this.getNavStructure(this.props.source).map((t) => {
         const cls = `title-anchor title-level${t.level} ${
           this.state.currentListNo === t.listNo ? 'active' : ''
         }`;
