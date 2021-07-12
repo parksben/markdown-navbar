@@ -295,17 +295,17 @@ export class MarkdownNavbar extends Component {
 
             this.updateHash(curHeading.dataId);
         }
-        if(currentNavElement){
-          const {container} = this.refs
-          const {offsetTop} = currentNavElement
-          const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
-          const min = containerScrollTop + 0.3 * containerOffsetHeight
-          const max = containerScrollTop  + 0.7 * containerOffsetHeight
-          if(offsetTop < min || offsetTop > max){
-              const targetTop = offsetTop - 0.2 * containerOffsetHeight
-              this.safeScrollTo(container, targetTop,0,true)
-          }
-        }
+        // if(currentNavElement){
+        //   const {container} = this.refs
+        //   const {offsetTop} = currentNavElement
+        //   const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
+        //   const min = containerScrollTop + 0.3 * containerOffsetHeight
+        //   const max = containerScrollTop  + 0.7 * containerOffsetHeight
+        //   if(offsetTop < min || offsetTop > max){
+        //       const targetTop = offsetTop - 0.2 * containerOffsetHeight
+        //       this.safeScrollTo(container, targetTop,0,true)
+        //   }
+        // }
         this.setState({
             currentListNo: curHeading.listNo,
         });
