@@ -137,7 +137,7 @@ export class MarkdownNavbar extends Component {
             .replace(/^[^#]+\n/g, '')
             .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, '') // 匹配行内出现 # 号的情况
             .replace(/^#\s[^#\n]*\n+/, '')
-            .replace(/```[^`\n]*\n+[^```]+```\n+/g, '')
+            .replace(/```[^`\n]*\n+[^```]+```\n*/g, '')
             .replace(/`([^`\n]+)`/g, '$1')
             .replace(/\*\*?([^*\n]+)\*\*?/g, '$1')
             .replace(/__?([^_\n]+)__?/g, '$1')
@@ -295,17 +295,17 @@ export class MarkdownNavbar extends Component {
 
             this.updateHash(curHeading.dataId);
         }
-        if(currentNavElement){
-          const {container} = this.refs
-          const {offsetTop} = currentNavElement
-          const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
-          const min = containerScrollTop + 0.3 * containerOffsetHeight
-          const max = containerScrollTop  + 0.7 * containerOffsetHeight
-          if(offsetTop < min || offsetTop > max){
-              const targetTop = offsetTop - 0.2 * containerOffsetHeight
-              this.safeScrollTo(container, targetTop,0,true)
-          }
-        }
+        // if(currentNavElement){
+        //   const {container} = this.refs
+        //   const {offsetTop} = currentNavElement
+        //   const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
+        //   const min = containerScrollTop + 0.3 * containerOffsetHeight
+        //   const max = containerScrollTop  + 0.7 * containerOffsetHeight
+        //   if(offsetTop < min || offsetTop > max){
+        //       const targetTop = offsetTop - 0.2 * containerOffsetHeight
+        //       this.safeScrollTo(container, targetTop,0,true)
+        //   }
+        // }
         this.setState({
             currentListNo: curHeading.listNo,
         });
@@ -330,7 +330,7 @@ export class MarkdownNavbar extends Component {
     }
 
     render() {
-      const tBlocks = this.getNavStructure().map((t) => {
+      const tBlocks = this.getNavStructure(this.props.source).map((t) => {
         const cls = `title-anchor title-level${t.level} ${
           this.state.currentListNo === t.listNo ? 'active' : ''
         }`;
