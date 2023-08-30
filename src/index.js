@@ -78,11 +78,21 @@ export class MarkdownNavbar extends Component {
         const { source } = this.props
         this.refreshNav(source)
     }
-    componentWillReceiveProps(newProps) {
-        // 复用时开启，用于在source更新时刷新列表
-        const { source } = newProps
-        this.refreshNav(source)
-    }
+    // componentWillReceiveProps在react 16.3被弃用，用getDerivedStateFromProps替换
+    static getDerivedStateFromProps(newProps, preProps) {
+		// 复用时开启，用于在source更新时刷新列表
+        if (newProps !== preProps) {
+            return {
+                source: newProps.source || null,
+            }
+        }
+        return null;
+	}
+    // componentWillReceiveProps(newProps) {
+    //     // 复用时开启，用于在source更新时刷新列表
+    //     const { source } = newProps
+    //     this.refreshNav(source)
+    // }
 
     shouldComponentUpdate(nextProps) {
         if (nextProps.source !== this.props.source) {
@@ -295,17 +305,18 @@ export class MarkdownNavbar extends Component {
 
             this.updateHash(curHeading.dataId);
         }
-        if(currentNavElement){
-          const {container} = this.refs
-          const {offsetTop} = currentNavElement
-          const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
-          const min = containerScrollTop + 0.3 * containerOffsetHeight
-          const max = containerScrollTop  + 0.7 * containerOffsetHeight
-          if(offsetTop < min || offsetTop > max){
-              const targetTop = offsetTop - 0.2 * containerOffsetHeight
-              this.safeScrollTo(container, targetTop,0,true)
-          }
-        }
+        // 下面代码会报错，找不到currentNavElement
+        // if(currentNavElement){
+        //   const {container} = this.refs
+        //   const {offsetTop} = currentNavElement
+        //   const {scrollTop:containerScrollTop,offsetHeight:containerOffsetHeight} = container
+        //   const min = containerScrollTop + 0.3 * containerOffsetHeight
+        //   const max = containerScrollTop  + 0.7 * containerOffsetHeight
+        //   if(offsetTop < min || offsetTop > max){
+        //       const targetTop = offsetTop - 0.2 * containerOffsetHeight
+        //       this.safeScrollTo(container, targetTop,0,true)
+        //   }
+        // }
         this.setState({
             currentListNo: curHeading.listNo,
         });
@@ -330,7 +341,9 @@ export class MarkdownNavbar extends Component {
     }
 
     render() {
-      const tBlocks = this.getNavStructure().map((t) => {
+      // getNavStructure()方法未获取到source
+      const { source } = this.props
+      const tBlocks = this.getNavStructure(source).map((t) => {
         const cls = `title-anchor title-level${t.level} ${
           this.state.currentListNo === t.listNo ? 'active' : ''
         }`;
